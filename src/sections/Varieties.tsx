@@ -16,16 +16,18 @@ const trust = [
 
 export function TrustStrip() {
   return (
-    <section className="border-b border-border bg-ivory">
-      <div className="no-scrollbar mx-auto flex max-w-7xl gap-10 overflow-x-auto px-5 py-7 md:justify-between md:px-8">
-        {trust.map(({ icon: Icon, label }) => (
-          <div key={label} className="flex shrink-0 items-center gap-3 text-deep">
-            <span className="grid h-10 w-10 place-items-center rounded-full bg-cream text-forest">
-              <Icon className="h-5 w-5" />
-            </span>
-            <span className="text-sm font-semibold">{label}</span>
-          </div>
-        ))}
+    <section className="w-full max-w-full overflow-hidden border-b border-border bg-ivory">
+      <div className="mx-auto w-full max-w-7xl px-5 py-7 md:px-8">
+        <div className="no-scrollbar flex w-full max-w-full gap-10 overflow-x-auto touch-pan-x md:justify-between">
+          {trust.map(({ icon: Icon, label }) => (
+            <div key={label} className="flex shrink-0 items-center gap-3 text-deep">
+              <span className="grid h-10 w-10 place-items-center rounded-full bg-cream text-forest">
+                <Icon className="h-5 w-5" />
+              </span>
+              <span className="text-sm font-semibold">{label}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -71,7 +73,10 @@ function CategoryCard({
         {/* Items */}
         <ul className="mt-4 flex flex-wrap gap-2">
           {category.items.slice(0, 3).map((item) => (
-            <li key={item} className="rounded-full border border-border px-3 py-1 text-[0.68rem] text-muted-foreground">
+            <li
+              key={item}
+              className="rounded-full border border-border px-3 py-1 text-[0.68rem] text-muted-foreground"
+            >
               {item}
             </li>
           ))}
@@ -100,8 +105,7 @@ export function Varieties() {
         eyebrow="Our Agricultural Products"
         title={
           <>
-            Sourced from India,{" "}
-            <em className="text-gold">Supplied Globally</em>
+            Sourced from India, <em className="text-gold">Supplied Globally</em>
           </>
         }
         subtitle="Explore agricultural products sourced from India for international buyers and bulk procurement requirements."

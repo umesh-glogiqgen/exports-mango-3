@@ -43,28 +43,33 @@ export function Story() {
             eyebrow="About Us"
             title={
               <>
-                Growing Partnerships{" "}
-                <em className="text-gold">Beyond Borders</em>
+                Growing Partnerships <em className="text-gold">Beyond Borders</em>
               </>
             }
           />
           <Reveal delay={0.1}>
             <p className="mt-8 font-display text-xl leading-snug text-deep md:text-2xl">
-              "Connecting Indian agricultural products with international buyers through quality-focused
-              product selection and reliable export coordination."
+              "Connecting Indian agricultural products with international buyers through
+              quality-focused product selection and reliable export coordination."
             </p>
             <p className="mt-6 text-muted-foreground leading-relaxed">
-              CG Brothers Exports Private Limited focuses on connecting Indian agricultural products with
-              international buyers. Through supplier relationships, quality-focused handling, and export
-              coordination, the company aims to build dependable, long-term business partnerships.
+              CHINNAGUWALA SHIVAHARI EXPORTS PRIVATE LIMITED (CS Shivahari Exports) focuses on
+              connecting authentic Indian agricultural products from our farm networks with
+              international buyers. Through trusted grower relationships, quality-focused handling,
+              and professional export coordination, the company builds dependable, long-term global
+              partnerships.
             </p>
             <p className="mt-4 text-muted-foreground leading-relaxed">
               Our approach emphasises agricultural sourcing, specification alignment, buyer-specific
-              requirements, and professional export coordination — bringing Indian farm produce to global
-              markets with care and reliability.
+              requirements, and professional export coordination — bringing Indian farm produce to
+              global markets with care and reliability.
             </p>
             <div className="mt-10 grid grid-cols-3 gap-6 border-t border-border pt-8">
-              {[["Vision", "Trusted global partner for Indian agricultural products"], ["Mission", "Quality products, long-term value"], ["Focus", "International B2B export"]].map(([n, l]) => (
+              {[
+                ["Vision", "Trusted global partner for Indian agricultural products"],
+                ["Mission", "Quality products, long-term value"],
+                ["Focus", "International B2B export"],
+              ].map(([n, l]) => (
                 <div key={n}>
                   <p className="font-display text-lg text-forest font-semibold">{n}</p>
                   <p className="mt-1 text-xs text-muted-foreground">{l}</p>
@@ -94,8 +99,7 @@ export function Process() {
           eyebrow="Our Process"
           title={
             <>
-              From Source{" "}
-              <em className="text-gold">to Shipment</em>
+              From Source <em className="text-gold">to Shipment</em>
             </>
           }
           subtitle="A structured, reliable export coordination process from buyer enquiry to destination delivery."
@@ -147,8 +151,7 @@ export function WhyUs() {
         eyebrow="Why Choose CG Brothers Exports"
         title={
           <>
-            Quality you can{" "}
-            <em className="text-gold">depend on.</em>
+            Quality you can <em className="text-gold">depend on.</em>
           </>
         }
         subtitle="Our approach focuses on product reliability, buyer alignment, and transparent export coordination."
@@ -185,28 +188,34 @@ export function Season() {
         <div className="relative z-10 p-8 md:p-16">
           <p className="eyebrow text-gold">Export Markets</p>
           <h2 className="mt-4 text-4xl text-ivory md:text-5xl">
-            Connecting India{" "}
-            <em className="text-gold">With the World</em>
+            Connecting India <em className="text-gold">With the World</em>
           </h2>
           <p className="mt-4 max-w-xl text-sm text-ivory/70 leading-relaxed">
-            CG Brothers Exports aims to serve international buyers across multiple regions. The markets below
-            represent target and potential export destinations, subject to product eligibility and destination
-            import requirements.
+            CHINNAGUWALA SHIVAHARI EXPORTS PRIVATE LIMITED aims to serve international buyers across
+            multiple continents. The markets below represent target and potential export
+            destinations, subject to product eligibility and destination import requirements.
           </p>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {EXPORT_REGIONS.map((region) => (
-              <div key={region.region} className="rounded-2xl border border-ivory/15 bg-ivory/5 p-4 backdrop-blur-sm">
+              <div
+                key={region.region}
+                className="rounded-2xl border border-ivory/15 bg-ivory/5 p-4 backdrop-blur-sm"
+              >
                 <div className="flex items-center gap-2 mb-3">
                   <MapPin className="h-4 w-4 text-gold shrink-0" />
                   <p className="text-sm font-semibold text-ivory">{region.region}</p>
                 </div>
                 <ul className="space-y-1">
                   {region.examples.map((c) => (
-                    <li key={c} className="text-xs text-ivory/60">{c}</li>
+                    <li key={c} className="text-xs text-ivory/60">
+                      {c}
+                    </li>
                   ))}
                 </ul>
-                <p className="mt-3 text-[0.6rem] text-gold/70 uppercase tracking-wider">{region.note}</p>
+                <p className="mt-3 text-[0.6rem] text-gold/70 uppercase tracking-wider">
+                  {region.note}
+                </p>
               </div>
             ))}
           </div>
@@ -214,7 +223,9 @@ export function Season() {
           <div className="mt-10">
             <CTAButton
               message="Hello, I would like to discuss export requirements for your region."
-              href={whatsappLink("Hello, I would like to discuss export requirements for your region.")}
+              href={whatsappLink(
+                "Hello, I would like to discuss export requirements for your region.",
+              )}
             >
               Discuss Your Requirements
             </CTAButton>

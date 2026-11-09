@@ -30,7 +30,7 @@ export function Navbar() {
       )}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 md:px-8">
-        <a href="#home" aria-label="CG Brothers Exports — Home">
+        <a href="#home" aria-label="CS Shivahari Exports — Home">
           <Logo light={light} />
         </a>
 
@@ -127,9 +127,7 @@ export function Navbar() {
                 Chat on WhatsApp
               </a>
             </div>
-            <p className="mt-auto pt-8 text-xs text-muted-foreground">
-              {SITE.BUSINESS_NAME}
-            </p>
+            <p className="mt-auto pt-8 text-xs text-muted-foreground">{SITE.BUSINESS_NAME}</p>
           </motion.div>
         )}
       </AnimatePresence>

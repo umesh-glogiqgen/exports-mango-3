@@ -7,12 +7,36 @@ import { whatsappLink } from "@/config/site";
 // ─── Quality & Certifications Section ────────────────────────────────────────
 
 const qualitySteps = [
-  { icon: Package2, title: "Supplier Selection", desc: "Identifying and engaging suitable Indian agricultural suppliers aligned with buyer requirements." },
-  { icon: FileText, title: "Product Inspection", desc: "Coordinating product inspection to verify quality parameters at source." },
-  { icon: Box, title: "Grading & Sorting", desc: "Ensuring products are graded, sorted, and prepared to agreed buyer specifications." },
-  { icon: Container, title: "Packaging", desc: "Appropriate packaging — bulk, cartons, bags, or buyer-branded options as agreed." },
-  { icon: FileText, title: "Documentation", desc: "Commercial invoice, packing list, and coordination of applicable export documentation." },
-  { icon: Info, title: "Destination Requirements", desc: "Aligning product preparation with destination country import and phytosanitary requirements." },
+  {
+    icon: Package2,
+    title: "Supplier Selection",
+    desc: "Identifying and engaging suitable Indian agricultural suppliers aligned with buyer requirements.",
+  },
+  {
+    icon: FileText,
+    title: "Product Inspection",
+    desc: "Coordinating product inspection to verify quality parameters at source.",
+  },
+  {
+    icon: Box,
+    title: "Grading & Sorting",
+    desc: "Ensuring products are graded, sorted, and prepared to agreed buyer specifications.",
+  },
+  {
+    icon: Container,
+    title: "Packaging",
+    desc: "Appropriate packaging — bulk, cartons, bags, or buyer-branded options as agreed.",
+  },
+  {
+    icon: FileText,
+    title: "Documentation",
+    desc: "Commercial invoice, packing list, and coordination of applicable export documentation.",
+  },
+  {
+    icon: Info,
+    title: "Destination Requirements",
+    desc: "Aligning product preparation with destination country import and phytosanitary requirements.",
+  },
 ];
 
 export function Products() {
@@ -21,7 +45,11 @@ export function Products() {
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <SectionHeading
           eyebrow="Quality & Certifications"
-          title={<>Quality <em className="text-gold">Comes First</em></>}
+          title={
+            <>
+              Quality <em className="text-gold">Comes First</em>
+            </>
+          }
           subtitle="International buyers need product consistency, clear specifications, appropriate packaging, and reliable documentation. Our approach focuses on aligning product preparation and export coordination with agreed buyer requirements."
         />
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -45,9 +73,9 @@ export function Products() {
           <div className="mt-14 rounded-2xl border border-dashed border-gold/40 bg-ivory p-8 text-center">
             <p className="eyebrow mb-3">Certifications & Registrations</p>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xl mx-auto">
-              Applicable certifications and registrations — including IEC, APEDA, FSSAI, GST, Spices Board
-              registration, and others — will be displayed here once verified company documents are provided.
-              Only genuine, confirmed certifications will be shown.
+              Applicable certifications and registrations — including IEC, APEDA, FSSAI, GST, Spices
+              Board registration, and others — will be displayed here once verified company
+              documents are provided. Only genuine, confirmed certifications will be shown.
             </p>
           </div>
         </Reveal>
@@ -59,19 +87,50 @@ export function Products() {
 // ─── Packaging & Logistics ────────────────────────────────────────────────────
 
 const packagingOptions = [
-  { label: "Bulk Packaging", desc: "Suitable for grains, pulses, and spices requiring large-volume export." },
-  { label: "Cartons", desc: "Standard export cartons for fresh fruits, vegetables, and packaged goods." },
+  {
+    label: "Bulk Packaging",
+    desc: "Suitable for grains, pulses, and spices requiring large-volume export.",
+  },
+  {
+    label: "Cartons",
+    desc: "Standard export cartons for fresh fruits, vegetables, and packaged goods.",
+  },
   { label: "Bags", desc: "Woven and paper bags for agricultural commodities and bulk dry goods." },
-  { label: "Food-Grade Packaging", desc: "Food-safe materials where required for processed and dehydrated products." },
-  { label: "Buyer-Branded", desc: "Custom packaging with buyer branding where feasible and agreed." },
-  { label: "Custom Requirements", desc: "Packaging adapted to product type, destination, and specific buyer needs." },
+  {
+    label: "Food-Grade Packaging",
+    desc: "Food-safe materials where required for processed and dehydrated products.",
+  },
+  {
+    label: "Buyer-Branded",
+    desc: "Custom packaging with buyer branding where feasible and agreed.",
+  },
+  {
+    label: "Custom Requirements",
+    desc: "Packaging adapted to product type, destination, and specific buyer needs.",
+  },
 ];
 
 const logisticsOptions = [
-  { icon: Ship, label: "Sea Freight", desc: "Primary export method for bulk agricultural shipments." },
-  { icon: Plane, label: "Air Freight", desc: "Available for suitable products requiring faster transit, subject to feasibility." },
-  { icon: Container, label: "Container Loading", desc: "Professional coordination of container loading and cargo documentation." },
-  { icon: FileText, label: "Export Documentation", desc: "Commercial invoice, packing list, and other applicable export documents." },
+  {
+    icon: Ship,
+    label: "Sea Freight",
+    desc: "Primary export method for bulk agricultural shipments.",
+  },
+  {
+    icon: Plane,
+    label: "Air Freight",
+    desc: "Available for suitable products requiring faster transit, subject to feasibility.",
+  },
+  {
+    icon: Container,
+    label: "Container Loading",
+    desc: "Professional coordination of container loading and cargo documentation.",
+  },
+  {
+    icon: FileText,
+    label: "Export Documentation",
+    desc: "Commercial invoice, packing list, and other applicable export documents.",
+  },
 ];
 
 export function Testimonials() {
@@ -79,7 +138,11 @@ export function Testimonials() {
     <section className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-36">
       <SectionHeading
         eyebrow="Packaging & Logistics"
-        title={<>Prepared for <em className="text-gold">International Shipment</em></>}
+        title={
+          <>
+            Prepared for <em className="text-gold">International Shipment</em>
+          </>
+        }
         subtitle="Packaging, logistics methods, and documentation are determined by the product, buyer requirements, destination country, and agreed shipment terms."
       />
 
@@ -122,9 +185,9 @@ export function Testimonials() {
           </div>
           <Reveal delay={0.2}>
             <p className="mt-6 rounded-xl bg-cream/60 px-5 py-4 text-xs text-muted-foreground leading-relaxed border border-border">
-              <strong className="text-deep">Note:</strong> Actual packaging, shipping methods, documentation
-              requirements, and overall feasibility depend on the product type, buyer requirements, destination
-              country regulations, and agreed shipment terms.
+              <strong className="text-deep">Note:</strong> Actual packaging, shipping methods,
+              documentation requirements, and overall feasibility depend on the product type, buyer
+              requirements, destination country regulations, and agreed shipment terms.
             </p>
           </Reveal>
         </div>
@@ -140,7 +203,11 @@ export function Gallery() {
     <section id="gallery" className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-36">
       <SectionHeading
         eyebrow="Gallery"
-        title={<>From Source <em className="text-gold">to Shipment</em></>}
+        title={
+          <>
+            From Source <em className="text-gold">to Shipment</em>
+          </>
+        }
         subtitle="Agricultural sourcing, product inspection, packaging, and export — a glimpse into our process."
       />
       <div className="mt-14 grid auto-rows-[160px] grid-cols-2 gap-3 md:auto-rows-[220px] md:grid-cols-4 md:gap-5">
@@ -183,18 +250,19 @@ export function FinalCTA() {
           <Reveal>
             <p className="eyebrow text-gold">Agricultural Products from India</p>
             <h2 className="mt-4 text-5xl leading-[0.95] text-ivory md:text-7xl">
-              Looking for Agricultural{" "}
-              <em className="text-gold">Products from India?</em>
+              Looking for Agricultural <em className="text-gold">Products from India?</em>
             </h2>
             <p className="mt-6 max-w-xl text-base text-ivory/75 leading-relaxed">
-              Tell us your product, quantity, destination, and packaging requirements. We will use your enquiry
-              to discuss availability, specifications, and a suitable quotation.
+              Tell us your product, quantity, destination, and packaging requirements. We will use
+              your enquiry to discuss availability, specifications, and a suitable quotation.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <CTAButton href="#contact">Request a Quote</CTAButton>
               <CTAButton
                 variant="ghostLight"
-                href={whatsappLink("Hello, I would like to enquire about agricultural products for export from India. Please share more details.")}
+                href={whatsappLink(
+                  "Hello, I would like to enquire about agricultural products for export from India. Please share more details.",
+                )}
               >
                 Contact Us on WhatsApp
               </CTAButton>

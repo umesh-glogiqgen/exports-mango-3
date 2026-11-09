@@ -99,7 +99,9 @@ function EnquiryForm({ preselectedProduct }: { preselectedProduct?: string }) {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
@@ -144,8 +146,8 @@ function EnquiryForm({ preselectedProduct }: { preselectedProduct?: string }) {
         </div>
         <h3 className="text-xl font-semibold text-deep">Your Enquiry is Ready</h3>
         <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-          Your email client should open with your enquiry details pre-filled. Please send the email to complete
-          your enquiry. If it did not open,{" "}
+          Your email client should open with your enquiry details pre-filled. Please send the email
+          to complete your enquiry. If it did not open,{" "}
           <a href={`mailto:${SITE.EMAIL_ADDRESS}`} className="text-forest underline">
             email us directly
           </a>{" "}
@@ -172,7 +174,8 @@ function EnquiryForm({ preselectedProduct }: { preselectedProduct?: string }) {
 
   const inputClass =
     "w-full rounded-xl border border-border bg-ivory px-4 py-3 text-sm text-deep placeholder:text-muted-foreground/60 focus:border-forest focus:outline-none focus:ring-2 focus:ring-forest/20 transition-all duration-200";
-  const labelClass = "mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground";
+  const labelClass =
+    "mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground";
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
@@ -337,8 +340,8 @@ function EnquiryForm({ preselectedProduct }: { preselectedProduct?: string }) {
       )}
 
       <p className="text-xs text-muted-foreground">
-        <span className="text-gold">*</span> Required fields. Submitting will open your email client with the
-        enquiry details pre-filled. This is a static website — no server submission occurs.
+        <span className="text-gold">*</span> Required fields. Submitting will open your email client
+        with the enquiry details pre-filled. This is a static website — no server submission occurs.
       </p>
 
       <button
@@ -364,8 +367,7 @@ export function Contact() {
             eyebrow="Get in Touch"
             title={
               <>
-                Request a{" "}
-                <em className="text-gold">Quote</em>
+                Request a <em className="text-gold">Quote</em>
               </>
             }
             subtitle="Share your product requirements, quantity, destination, and packaging needs. We will get back to you to discuss availability and specifications."
@@ -420,8 +422,8 @@ export function Footer() {
             {SITE.TAGLINE}
           </p>
           <p className="mt-5 max-w-xs text-sm text-ivory/55 leading-relaxed">
-            An India-based agricultural export company connecting Indian agricultural products with international
-            buyers, food distributors, and bulk procurement businesses worldwide.
+            An India-based agricultural export company connecting Indian agricultural products with
+            international buyers, food distributors, and bulk procurement businesses worldwide.
           </p>
           <div className="mt-6 flex gap-3">
             {socials.map(({ icon: Icon, label, href, ext }) => (

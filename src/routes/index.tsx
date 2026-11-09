@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/sections/Hero";
 import { TrustStrip, Varieties } from "@/sections/Varieties";
+import { CatalogueExplorer } from "@/components/CatalogueExplorer";
+import { Compliance } from "@/sections/Compliance";
 import { Process, Season, Story, WhyUs } from "@/sections/Story";
 import { FinalCTA, Gallery, Products, Testimonials } from "@/sections/Showcase";
 import { Contact, Footer } from "@/sections/Contact";
@@ -12,23 +14,25 @@ export const Route = createFileRoute("/")({
     meta: [
       {
         title:
-          "CG Brothers Exports Private Limited | Agricultural Products from India",
+          "CHINNAGUWALA SHIVAHARI EXPORTS PRIVATE LIMITED | Official Product Catalogue & FSSAI Central License",
       },
       {
         name: "description",
         content:
-          "CG Brothers Exports Private Limited — Premium Indian agricultural products including fruits, vegetables, spices, tamarind, rice, grains, pulses, seeds and processed products. B2B export enquiries welcome.",
+          "Official product catalogue of CHINNAGUWALA SHIVAHARI EXPORTS PRIVATE LIMITED (CS Shivahari Exports). 190 Indian agricultural products across 22 categories — Mangoes, Fruits, Vegetables, Spices, Tamarind, Millets, Rice, Pulses, Bamboo & Packaging under FSSAI Central License 10126999000631.",
       },
       {
         property: "og:title",
-        content:
-          "CG Brothers Exports Private Limited | From Indian Farms to Global Markets",
+        content: "CS Shivahari Exports | From Our Farms to Global Markets — Official Catalogue",
       },
       {
         property: "og:description",
         content:
-          "Agricultural products sourced from India for international buyers. Request a quote for fruits, vegetables, spices, tamarind, grains, pulses and more.",
+          "190 agricultural products exported from India. FSSAI Central License No. 10126999000631. Download official catalogue and request B2B export quotes.",
       },
+      { property: "og:image", content: "/assets/company-logo.png" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "/assets/company-logo.png" },
     ],
   }),
   component: Index,
@@ -36,20 +40,22 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <main>
+    <main className="w-full max-w-full overflow-x-clip">
       <Navbar />
       <Hero />
       <TrustStrip />
-      <Story />
+      <CatalogueExplorer />
       <Varieties />
+      <Compliance />
+      <Story />
       <WhyUs />
-      <Season />
-      <Process />
       <Products />
-      <Testimonials />
+      <Process />
       <Gallery />
-      <Contact />
+      <Season />
+      <Testimonials />
       <FinalCTA />
+      <Contact />
       <Footer />
       <WhatsAppFloat />
     </main>

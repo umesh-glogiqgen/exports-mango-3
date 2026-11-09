@@ -34,32 +34,32 @@ export function Reveal({
 }
 
 /**
- * CG Brothers Exports — Professional wordmark with abstract leaf/globe mark.
+ * Official Company Logo with authentic emblem from BROTHERS.pdf
  */
-export function Logo({ light }: { light?: boolean }) {
+export function Logo({ light, className }: { light?: boolean; className?: string }) {
   return (
-    <span className="flex items-center gap-3">
-      {/* Abstract agricultural brand mark: leaf + globe arc */}
-      <svg viewBox="0 0 36 36" className="h-9 w-9 shrink-0" aria-hidden>
-        {/* Globe arc representing international trade */}
-        <circle cx="18" cy="18" r="14" className="fill-none stroke-gold" strokeWidth="1.5" opacity="0.6" />
-        {/* Leaf shape representing agriculture */}
-        <path
-          d="M18 8 C24 10 28 15 26 22 C22 28 14 28 11 22 C8 16 12 8 18 8Z"
-          className="fill-gold"
-          opacity="0.85"
-        />
-        {/* Stem */}
-        <path d="M18 28 L18 33" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className={light ? "stroke-ivory" : "stroke-forest"} opacity="0.6" />
-        {/* Vein */}
-        <path d="M18 14 C20 18 19 22 17 26" stroke="white" strokeWidth="1" strokeLinecap="round" opacity="0.5" fill="none" />
-      </svg>
+    <span className={cn("flex items-center gap-3", className)}>
+      <img
+        src="/assets/logo-128.png"
+        alt="CHINNAGUWALA SHIVAHARI EXPORTS PRIVATE LIMITED"
+        className="h-10 w-10 shrink-0 object-contain drop-shadow-sm transition-transform duration-300 hover:scale-105"
+      />
       {/* Wordmark */}
       <span className="flex flex-col leading-none">
-        <span className={cn("font-display text-xl font-semibold tracking-tight", light ? "text-ivory" : "text-deep")}>
-          CG Brothers
+        <span
+          className={cn(
+            "font-display text-xl font-semibold tracking-tight",
+            light ? "text-ivory" : "text-deep",
+          )}
+        >
+          CS Shivahari
         </span>
-        <span className={cn("text-[0.6rem] font-sans font-medium tracking-[0.18em] uppercase", light ? "text-ivory/60" : "text-muted-foreground")}>
+        <span
+          className={cn(
+            "text-[0.6rem] font-sans font-medium tracking-[0.18em] uppercase",
+            light ? "text-ivory/60" : "text-muted-foreground",
+          )}
+        >
           Exports Pvt Ltd
         </span>
       </span>
@@ -116,11 +116,21 @@ export function SectionHeading({
   return (
     <Reveal className={cn("max-w-2xl", center && "mx-auto text-center")}>
       <p className="eyebrow">{eyebrow}</p>
-      <h2 className={cn("mt-4 text-4xl leading-[1.05] font-medium md:text-6xl", light ? "text-ivory" : "text-deep")}>
+      <h2
+        className={cn(
+          "mt-4 text-4xl leading-[1.05] font-medium md:text-6xl",
+          light ? "text-ivory" : "text-deep",
+        )}
+      >
         {title}
       </h2>
       {subtitle && (
-        <p className={cn("mt-5 text-base md:text-lg", light ? "text-ivory/70" : "text-muted-foreground")}>
+        <p
+          className={cn(
+            "mt-5 text-base md:text-lg",
+            light ? "text-ivory/70" : "text-muted-foreground",
+          )}
+        >
           {subtitle}
         </p>
       )}

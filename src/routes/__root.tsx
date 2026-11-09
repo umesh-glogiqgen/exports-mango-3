@@ -78,13 +78,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "CG Brothers Exports Private Limited | Agricultural Products from India" },
-      { name: "description", content: "Explore agricultural products sourced from India, including fruits, vegetables, spices, tamarind, grains, pulses, seeds, and processed products. Contact CG Brothers Exports for B2B enquiries." },
+      {
+        title:
+          "CHINNAGUWALA SHIVAHARI EXPORTS PRIVATE LIMITED | Official Product Catalogue & Export",
+      },
+      {
+        name: "description",
+        content:
+          "Official 23-page product catalogue of CHINNAGUWALA SHIVAHARI EXPORTS PRIVATE LIMITED (CS Shivahari Exports). 190 Indian agricultural products across 22 categories under FSSAI Central License 10126999000631.",
+      },
       { property: "og:type", content: "website" },
-      { property: "og:title", content: "CG Brothers Exports Private Limited | From Indian Farms to Global Markets" },
-      { property: "og:description", content: "Premium agricultural products sourced from India for international buyers. Fruits, vegetables, spices, tamarind, rice, pulses, seeds and processed products." },
+      {
+        property: "og:title",
+        content: "CS Shivahari Exports | From Our Farms to Global Markets — Official Catalogue",
+      },
+      {
+        property: "og:description",
+        content:
+          "190 agricultural products exported from India. FSSAI Central License No. 10126999000631. Download official catalogue and request B2B export quotes.",
+      },
+      { property: "og:image", content: "/assets/company-logo.png" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "CG Brothers Exports Private Limited | Agricultural Products from India" },
+      {
+        name: "twitter:title",
+        content: "CHINNAGUWALA SHIVAHARI EXPORTS PRIVATE LIMITED | Official Product Catalogue",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "190 Indian agricultural products exported under FSSAI Central License 10126999000631. Download official 23-page catalogue.",
+      },
+      { name: "twitter:image", content: "/assets/company-logo.png" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -93,11 +117,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap",
       },
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      ...(appCss
+        ? [
+            {
+              rel: "stylesheet",
+              href: appCss,
+            },
+          ]
+        : []),
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon.ico", sizes: "any" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
   }),
   shellComponent: RootShell,

@@ -12,7 +12,7 @@ export function WhatsAppFloat() {
       href={whatsappLink()}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat with CG Brothers Exports on WhatsApp"
+      aria-label="Chat with CS Shivahari Exports on WhatsApp"
       initial={{ opacity: 0, scale: 0.6 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 2.5, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}

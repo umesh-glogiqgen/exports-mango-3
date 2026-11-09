@@ -58,8 +58,8 @@ export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
+import type { getRouter } from './D:/CDrive_Moved/Downloads/mongop/src/router.tsx'
+import type { startInstance } from './D:/CDrive_Moved/Downloads/mongop/src/start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
