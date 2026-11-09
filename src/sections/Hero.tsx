@@ -240,28 +240,39 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Bottom Horizontal Product Carousel Strip */}
-      <div className="relative z-10 mt-10 w-full max-w-full overflow-hidden border-t border-ivory/10 bg-deep/70 py-4 backdrop-blur-md">
-        <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold/80 mb-3">
+      {/* Bottom Horizontal Product Carousel Strip — Infinite Scrolling Marquee */}
+      <div className="relative z-10 mt-10 w-full max-w-full overflow-hidden border-t border-ivory/10 bg-deep/75 py-3.5 backdrop-blur-md">
+        <div className="mx-auto w-full max-w-7xl px-5 md:px-8 mb-2 flex items-center justify-between">
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-gold/90">
             Quick Catalog Preview · Click Any Product to Explore
           </p>
-          <div className="no-scrollbar flex w-full max-w-full gap-4 overflow-x-auto pb-1 touch-pan-x">
-            {QUICK_CATEGORIES.map((item) => (
+          <span className="hidden sm:inline-block text-[0.65rem] text-ivory/45">
+            Hover to pause scroll
+          </span>
+        </div>
+
+        {/* Infinite Scrolling Track */}
+        <div className="relative w-full overflow-hidden">
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-deep/90 to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-deep/90 to-transparent z-10" />
+
+          <div className="flex w-max gap-3.5 animate-marquee py-1">
+            {[...QUICK_CATEGORIES, ...QUICK_CATEGORIES].map((item, idx) => (
               <a
-                key={item.name}
+                key={`${item.name}-${idx}`}
                 href="#products"
-                className="group flex shrink-0 items-center gap-2.5 rounded-xl border border-ivory/15 bg-ivory/5 px-3 py-1.5 transition-all hover:border-gold/50 hover:bg-ivory/10 hover:shadow-md"
+                className="group flex shrink-0 items-center gap-2.5 rounded-xl border border-ivory/15 bg-ivory/5 px-3 py-1.5 transition-all hover:border-gold/50 hover:bg-ivory/15 hover:shadow-md cursor-pointer"
               >
                 <img
                   src={item.img}
                   alt={item.name}
-                  className="h-8 w-8 rounded-lg object-cover border border-ivory/20"
+                  loading="lazy"
+                  className="h-8 w-8 rounded-lg object-cover border border-ivory/20 group-hover:scale-105 transition-transform"
                 />
                 <span className="text-xs font-medium text-ivory group-hover:text-gold transition-colors whitespace-nowrap">
                   {item.name}
                 </span>
-                <ArrowRight className="h-3 w-3 text-ivory/50 group-hover:text-gold group-hover:translate-x-0.5 transition-all" />
+                <ArrowRight className="h-3 w-3 text-ivory/45 group-hover:text-gold group-hover:translate-x-0.5 transition-all" />
               </a>
             ))}
           </div>

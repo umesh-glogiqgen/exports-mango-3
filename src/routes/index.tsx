@@ -44,8 +44,8 @@ function Index() {
       <Navbar />
       <Hero />
       <TrustStrip />
-      <CatalogueExplorer />
       <Varieties />
+      <CatalogueExplorer />
       <Compliance />
       <Story />
       <WhyUs />

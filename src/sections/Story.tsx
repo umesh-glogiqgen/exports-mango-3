@@ -88,57 +88,8 @@ export function Story() {
   );
 }
 
-// ─── Export Process Timeline ──────────────────────────────────────────────────
-
-export function Process() {
-  return (
-    <section id="process" className="relative overflow-hidden bg-deep py-24 md:py-36">
-      <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <SectionHeading
-          light
-          eyebrow="Our Process"
-          title={
-            <>
-              From Source <em className="text-gold">to Shipment</em>
-            </>
-          }
-          subtitle="A structured, reliable export coordination process from buyer enquiry to destination delivery."
-        />
-        <div className="relative mt-16">
-          {/* Progress line — desktop horizontal */}
-          <div className="absolute top-6 left-6 h-[calc(100%-3rem)] w-px bg-ivory/10 md:top-6 md:left-0 md:h-px md:w-full" />
-          <motion.div
-            initial={{ scaleX: 0, scaleY: 0 }}
-            whileInView={{ scaleX: 1, scaleY: 1 }}
-            viewport={{ once: true, margin: "-120px" }}
-            transition={{ duration: 2.5, ease }}
-            className="absolute top-6 left-6 h-[calc(100%-3rem)] w-px origin-top bg-gradient-gold md:left-0 md:h-px md:w-full md:origin-left"
-          />
-          <ol className="grid gap-10 md:grid-cols-4 lg:grid-cols-8 md:gap-4">
-            {PROCESS_STEPS.map((step, i) => (
-              <motion.li
-                key={step.number}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ delay: 0.2 + i * 0.2, duration: 0.7, ease }}
-                className="relative flex gap-6 md:flex-col"
-              >
-                <span className="relative z-10 grid h-12 w-12 shrink-0 place-items-center rounded-full border border-gold/50 bg-deep font-display text-lg text-gold">
-                  {step.number}
-                </span>
-                <div>
-                  <h3 className="text-lg text-ivory leading-snug">{step.title}</h3>
-                  <p className="mt-2 text-xs text-ivory/55 leading-relaxed">{step.description}</p>
-                </div>
-              </motion.li>
-            ))}
-          </ol>
-        </div>
-      </div>
-    </section>
-  );
-}
+// ─── Export Process Timeline (Cinematic GSAP & World Map Delivery Animation) ───
+export { ProcessTimeline as Process } from "./ProcessTimeline";
 
 // ─── Why Choose CG Brothers ───────────────────────────────────────────────────
 
