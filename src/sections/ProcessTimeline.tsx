@@ -4,6 +4,8 @@ import {
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
+  Play,
+  Pause,
   RotateCcw,
   Compass,
   Ship,
@@ -17,11 +19,13 @@ import {
   Layers,
   Clock,
   ArrowRight,
+  Globe2,
 } from "lucide-react";
 import { SectionHeading, ease } from "@/components/primitives";
 import { PROCESS_STEPS } from "@/data/content";
+import mapData from "@/data/worldMapPaths.json";
 
-// Rich B2B checkpoints for each stage
+// Rich operational checkpoints for each stage
 const STAGE_DETAILS: Record<
   number,
   {
@@ -122,72 +126,109 @@ const STAGE_DETAILS: Record<
   },
 };
 
+type DestinationKey = "europe" | "middleEast" | "southeastAsia" | "northAmerica";
+
+interface WorldMapData {
+  viewBox: string;
+  landPath: string;
+  gratPath: string;
+  coords: {
+    india: [number, number];
+    rotterdam: [number, number];
+    dubai: [number, number];
+    singapore: [number, number];
+    newYork: [number, number];
+  };
+  corridors: {
+    europe: string;
+    middleEast: string;
+    southeastAsia: string;
+    northAmerica: string;
+  };
+}
+
+const map = mapData as unknown as WorldMapData;
+
+interface DestinationRouteConfig {
+  name: string;
+  region: string;
+  destX: number;
+  destY: number;
+  routePath: string;
+  transitTime: string;
+  seaPort: string;
+}
+
 export function ProcessTimeline() {
   const sectionRef = useRef<HTMLElement>(null);
   const [activeStep, setActiveStep] = useState<number>(1);
-  const [hasAnimatedIn, setHasAnimatedIn] = useState<boolean>(false);
-  const [destinationMode, setDestinationMode] = useState<"europe" | "middle-east" | "southeast-asia">("europe");
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [viewMode, setViewMode] = useState<"detail" | "map">("detail");
+  const [destinationMode, setDestinationMode] = useState<DestinationKey>("europe");
 
-  // One-time smooth entry animation when section enters viewport
-  // NOTE: This does NOT listen to continuous scroll scrubbing!
-  // Scrolling up, down, or outside the section NEVER disrupts or changes the active state.
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const el = sectionRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry && entry.isIntersecting && !hasAnimatedIn) {
-          setHasAnimatedIn(true);
-        }
-      },
-      { threshold: 0.25 }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [hasAnimatedIn]);
-
-  // Destination route definitions for Stage 08 world map
-  const routes = {
+  // Destination route definitions using real Natural Earth projected coordinates
+  const routes: Record<DestinationKey, DestinationRouteConfig> = {
     europe: {
       name: "Rotterdam / Hamburg / Felixstowe",
       region: "European Union & United Kingdom",
-      destX: 430,
-      destY: 150,
-      routePath: "M 630 265 Q 520 220, 480 190 T 430 150",
+      destX: map.coords.rotterdam[0],
+      destY: map.coords.rotterdam[1],
+      routePath: map.corridors.europe,
       transitTime: "18 – 22 Days",
       seaPort: "JNPT / Krishnapatnam → Port of Rotterdam",
     },
-    "middle-east": {
+    middleEast: {
       name: "Jebel Ali / Dubai / Doha",
       region: "Gulf GCC Region",
-      destX: 515,
-      destY: 215,
-      routePath: "M 630 265 Q 570 240, 515 215",
+      destX: map.coords.dubai[0],
+      destY: map.coords.dubai[1],
+      routePath: map.corridors.middleEast,
       transitTime: "4 – 7 Days",
       seaPort: "Krishnapatnam / Chennai → Jebel Ali Port",
     },
-    "southeast-asia": {
+    southeastAsia: {
       name: "Singapore / Port Klang",
       region: "ASEAN Markets",
-      destX: 740,
-      destY: 295,
-      routePath: "M 630 265 Q 685 280, 740 295",
+      destX: map.coords.singapore[0],
+      destY: map.coords.singapore[1],
+      routePath: map.corridors.southeastAsia,
       transitTime: "5 – 8 Days",
       seaPort: "Chennai Port → Port of Singapore",
     },
+    northAmerica: {
+      name: "New York / New Jersey / Savannah",
+      region: "North American Atlantic Coast",
+      destX: map.coords.newYork[0],
+      destY: map.coords.newYork[1],
+      routePath: map.corridors.northAmerica,
+      transitTime: "24 – 28 Days",
+      seaPort: "JNPT → Port of New York & New Jersey",
+    },
   };
 
-  const currentRoute = routes[destinationMode];
+  const currentRoute = routes[destinationMode] || routes.europe;
   const defaultStep = PROCESS_STEPS[0] as (typeof PROCESS_STEPS)[0];
   const defaultDetail = STAGE_DETAILS[1] as (typeof STAGE_DETAILS)[1];
   const stepData = PROCESS_STEPS[activeStep - 1] ?? defaultStep;
   const detailData = STAGE_DETAILS[activeStep] ?? defaultDetail;
   const StepIcon = detailData.icon;
+
+  // Auto-play journey controller
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    const timer = setInterval(() => {
+      setActiveStep((prev) => {
+        if (prev >= 8) {
+          setIsPlaying(false);
+          return 8;
+        }
+        return prev + 1;
+      });
+    }, 2400);
+
+    return () => clearInterval(timer);
+  }, [isPlaying]);
 
   const nextStep = () => {
     setActiveStep((prev) => (prev < 8 ? prev + 1 : 1));
@@ -196,6 +237,8 @@ export function ProcessTimeline() {
   const prevStep = () => {
     setActiveStep((prev) => (prev > 1 ? prev - 1 : 8));
   };
+
+  const showGlobalMap = activeStep >= 7 || viewMode === "map";
 
   return (
     <section
@@ -221,8 +264,8 @@ export function ProcessTimeline() {
             subtitle="A structured, reliable export coordination process from buyer enquiry to destination delivery."
           />
 
-          {/* Stepper Status Pill */}
-          <div className="flex items-center gap-3 shrink-0 pb-2">
+          {/* Stepper Status Pill & Action Buttons */}
+          <div className="flex flex-wrap items-center gap-3 shrink-0 pb-2">
             <span className="flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-1.5 text-xs font-semibold text-gold shadow-sm backdrop-blur">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
@@ -231,13 +274,36 @@ export function ProcessTimeline() {
               Stage {String(activeStep).padStart(2, "0")} of 08 · {stepData.title}
             </span>
 
+            {/* Autoplay Journey Button */}
             <button
-              onClick={() => setActiveStep(8)}
-              className="flex items-center gap-1.5 rounded-full border border-ivory/20 bg-ivory/5 px-3 py-1.5 text-xs font-medium text-ivory/80 transition-all hover:border-gold/50 hover:bg-gold/10 hover:text-gold"
-              title="Jump to Stage 08 Destination Delivery"
+              onClick={() => setIsPlaying(!isPlaying)}
+              className="flex items-center gap-1.5 rounded-full border border-ivory/20 bg-ivory/5 px-3.5 py-1.5 text-xs font-medium text-ivory/80 transition-all hover:border-gold/50 hover:bg-gold/10 hover:text-gold active:scale-95"
+              title={isPlaying ? "Pause auto-progression" : "Auto-play export flow"}
             >
-              <MapPin className="h-3.5 w-3.5 text-[#E53935]" />
-              <span>View Delivery 🌍</span>
+              {isPlaying ? (
+                <>
+                  <Pause className="h-3.5 w-3.5 text-gold" />
+                  <span>Pause</span>
+                </>
+              ) : (
+                <>
+                  <Play className="h-3.5 w-3.5 text-gold" />
+                  <span>Autoplay Journey</span>
+                </>
+              )}
+            </button>
+
+            {/* Quick Map Toggle */}
+            <button
+              onClick={() => setViewMode(viewMode === "map" ? "detail" : "map")}
+              className={`flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all ${
+                viewMode === "map"
+                  ? "border-gold bg-gold text-deep font-semibold"
+                  : "border-ivory/20 bg-ivory/5 text-ivory/80 hover:border-gold/40 hover:text-gold"
+              }`}
+            >
+              <Globe2 className="h-3.5 w-3.5" />
+              <span>{viewMode === "map" ? "Show Stage Detail" : "World Route Map 🌍"}</span>
             </button>
           </div>
         </div>
@@ -267,7 +333,10 @@ export function ProcessTimeline() {
                 return (
                   <li
                     key={step.number}
-                    onClick={() => setActiveStep(stepNum)}
+                    onClick={() => {
+                      setActiveStep(stepNum);
+                      setIsPlaying(false);
+                    }}
                     className="group relative flex flex-col items-center text-center cursor-pointer transition-all duration-300"
                   >
                     {/* Circle Node Button */}
@@ -320,7 +389,10 @@ export function ProcessTimeline() {
               return (
                 <button
                   key={step.number}
-                  onClick={() => setActiveStep(stepNum)}
+                  onClick={() => {
+                    setActiveStep(stepNum);
+                    setIsPlaying(false);
+                  }}
                   className={`flex shrink-0 items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium transition-all ${
                     isActive
                       ? "bg-gold text-deep font-bold shadow-md ring-2 ring-gold/40"
@@ -392,7 +464,7 @@ export function ProcessTimeline() {
                   className="flex items-center gap-2 rounded-xl border border-ivory/15 bg-ivory/5 px-4 py-2 text-xs font-medium text-ivory/80 transition-all hover:border-gold/40 hover:bg-ivory/10 hover:text-ivory active:scale-95"
                 >
                   <ChevronLeft className="h-4 w-4 text-gold" />
-                  <span>Previous Stage</span>
+                  <span>Previous</span>
                 </button>
 
                 <span className="text-xs text-ivory/50">
@@ -403,7 +475,7 @@ export function ProcessTimeline() {
                   onClick={nextStep}
                   className="flex items-center gap-2 rounded-xl border border-gold/40 bg-gold/15 px-4 py-2 text-xs font-semibold text-gold transition-all hover:bg-gold hover:text-deep active:scale-95 shadow-sm"
                 >
-                  <span>Next Stage</span>
+                  <span>Next</span>
                   <ChevronRight className="h-4 w-4" />
                 </button>
               </div>
@@ -411,14 +483,14 @@ export function ProcessTimeline() {
 
             {/* Right Column: Dynamic Visual Engine (7 Cols) */}
             <div className="lg:col-span-7">
-              {/* If Stage 07 or 08 is active: Display the Interactive World Map & Route */}
-              {activeStep >= 7 ? (
+              {showGlobalMap ? (
+                /* ─── REAL NATURAL EARTH WORLD SHIPPING MAP ─── */
                 <div className="overflow-hidden rounded-2xl border border-gold/40 bg-[#06140e] shadow-xl">
                   {/* Map Header with Corridor Tabs */}
                   <div className="flex flex-wrap items-center justify-between gap-3 border-b border-ivory/10 bg-ivory/[0.02] px-5 py-3">
                     <div className="flex items-center gap-2 text-xs text-gold font-semibold uppercase tracking-wider">
                       <Compass className="h-4 w-4" />
-                      <span>Global Shipping Corridor · Port Delivery</span>
+                      <span>International Shipping Corridors · Global Delivery</span>
                     </div>
 
                     <div className="flex items-center gap-1 rounded-lg bg-deep/80 p-0.5 border border-ivory/15 text-[0.7rem]">
@@ -433,9 +505,9 @@ export function ProcessTimeline() {
                         Europe
                       </button>
                       <button
-                        onClick={() => setDestinationMode("middle-east")}
+                        onClick={() => setDestinationMode("middleEast")}
                         className={`rounded px-2.5 py-1 font-medium transition-all ${
-                          destinationMode === "middle-east"
+                          destinationMode === "middleEast"
                             ? "bg-gold text-deep font-bold shadow"
                             : "text-ivory/60 hover:text-ivory"
                         }`}
@@ -443,31 +515,34 @@ export function ProcessTimeline() {
                         Middle East
                       </button>
                       <button
-                        onClick={() => setDestinationMode("southeast-asia")}
+                        onClick={() => setDestinationMode("southeastAsia")}
                         className={`rounded px-2.5 py-1 font-medium transition-all ${
-                          destinationMode === "southeast-asia"
+                          destinationMode === "southeastAsia"
                             ? "bg-gold text-deep font-bold shadow"
                             : "text-ivory/60 hover:text-ivory"
                         }`}
                       >
                         SE Asia
                       </button>
+                      <button
+                        onClick={() => setDestinationMode("northAmerica")}
+                        className={`rounded px-2.5 py-1 font-medium transition-all ${
+                          destinationMode === "northAmerica"
+                            ? "bg-gold text-deep font-bold shadow"
+                            : "text-ivory/60 hover:text-ivory"
+                        }`}
+                      >
+                        USA
+                      </button>
                     </div>
                   </div>
 
-                  {/* SVG Map Canvas */}
-                  <div className="relative aspect-[16/9] w-full flex items-center justify-center p-2">
-                    {/* Background coordinate grid */}
-                    <div
-                      className="absolute inset-0 opacity-15"
-                      style={{
-                        backgroundImage:
-                          "linear-gradient(to right, rgba(212,175,55,0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(212,175,55,0.2) 1px, transparent 1px)",
-                        backgroundSize: "40px 40px",
-                      }}
-                    />
-
-                    <svg viewBox="0 0 1000 450" className="h-full w-full object-contain pointer-events-none">
+                  {/* Real World SVG Map Canvas */}
+                  <div className="relative aspect-[16/9] w-full flex items-center justify-center p-2 bg-[#05110c]">
+                    <svg
+                      viewBox={mapData.viewBox}
+                      className="h-full w-full object-contain pointer-events-none select-none"
+                    >
                       <defs>
                         <linearGradient id="corridorGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                           <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.4" />
@@ -475,49 +550,57 @@ export function ProcessTimeline() {
                           <stop offset="100%" stopColor="#E53935" stopOpacity="1" />
                         </linearGradient>
                         <filter id="pinShadow" x="-20%" y="-20%" width="140%" height="140%">
-                          <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#000000" floodOpacity="0.7" />
+                          <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#000000" floodOpacity="0.8" />
                         </filter>
                       </defs>
 
-                      {/* Continents Outlines */}
-                      <g fill="rgba(244, 240, 230, 0.04)" stroke="rgba(212, 175, 55, 0.25)" strokeWidth="1">
-                        <path d="M 370 120 Q 400 110, 440 130 T 470 180 Q 440 200, 390 190 T 370 120 Z" />
-                        <path d="M 370 200 Q 450 190, 520 220 T 500 300 Q 400 310, 370 240 Z" />
-                        <path d="M 480 200 Q 530 195, 560 220 T 530 270 Q 490 260, 480 200 Z" />
-                        <path d="M 590 210 Q 640 210, 670 235 T 645 320 Q 620 330, 605 280 T 590 210 Z" />
-                        <path d="M 680 180 Q 780 170, 840 210 T 800 310 Q 750 330, 710 260 Z" />
-                      </g>
+                      {/* Delicate 10-degree Geographic Graticule Grid */}
+                      <path
+                        d={mapData.gratPath}
+                        fill="none"
+                        stroke="rgba(212, 175, 55, 0.09)"
+                        strokeWidth="0.5"
+                      />
 
-                      {/* Origin: Andhra Pradesh, India */}
-                      <g transform="translate(630, 265)">
-                        <circle r="16" fill="#D4AF37" opacity="0.25" className="animate-ping" />
-                        <circle r="6" fill="#D4AF37" stroke="#07150F" strokeWidth="2" />
+                      {/* Authentic Natural Earth Continents Vector */}
+                      <path
+                        d={mapData.landPath}
+                        fill="rgba(244, 240, 230, 0.08)"
+                        stroke="rgba(212, 175, 55, 0.35)"
+                        strokeWidth="0.8"
+                      />
+
+                      {/* India Origin Point Marker (Andhra Pradesh / Chennai) */}
+                      <g transform={`translate(${map.coords.india[0]}, ${map.coords.india[1]})`}>
+                        <circle r="15" fill="#D4AF37" opacity="0.25" className="animate-ping" />
+                        <circle r="5" fill="#D4AF37" stroke="#07150F" strokeWidth="2" />
                         <text
-                          x="12"
+                          x="10"
                           y="4"
                           fill="#E8C547"
-                          fontSize="11"
+                          fontSize="10"
                           fontFamily="Manrope, sans-serif"
                           fontWeight="700"
+                          letterSpacing="0.04em"
                         >
                           ORIGIN: Andhra Pradesh, India
                         </text>
                       </g>
 
-                      {/* Golden Route Line Arc */}
+                      {/* Realistic Great-Circle Maritime Shipping Line */}
                       <path
                         d={currentRoute.routePath}
                         fill="none"
                         stroke="url(#corridorGrad)"
-                        strokeWidth="3.5"
-                        strokeDasharray="6,6"
+                        strokeWidth="2.8"
+                        strokeDasharray="5,5"
                       />
 
-                      {/* Moving Waypoint Indicator */}
+                      {/* Moving Vessel Waypoint */}
                       <circle
-                        cx={(630 + currentRoute.destX) / 2}
-                        cy={(265 + currentRoute.destY) / 2}
-                        r="4.5"
+                        cx={(map.coords.india[0] + currentRoute.destX) / 2}
+                        cy={(map.coords.india[1] + currentRoute.destY) / 2}
+                        r="4"
                         fill="#E8C547"
                         className="animate-pulse"
                       />
@@ -526,7 +609,7 @@ export function ProcessTimeline() {
                       <g transform={`translate(${currentRoute.destX}, ${currentRoute.destY})`}>
                         {/* Ripple Impact Waves */}
                         <circle
-                          r="22"
+                          r="20"
                           fill="none"
                           stroke="#E53935"
                           strokeWidth="1.5"
@@ -534,11 +617,11 @@ export function ProcessTimeline() {
                           className="animate-ping"
                         />
                         <circle
-                          r="34"
+                          r="32"
                           fill="none"
                           stroke="#D4AF37"
                           strokeWidth="1"
-                          opacity="0.3"
+                          opacity="0.25"
                         />
 
                         {/* Ground Shadow */}
@@ -565,16 +648,16 @@ export function ProcessTimeline() {
                           <rect
                             x="16"
                             y="-25"
-                            width="215"
-                            height="30"
+                            width="220"
+                            height="32"
                             rx="6"
-                            fill="rgba(8, 22, 16, 0.9)"
+                            fill="rgba(8, 22, 16, 0.92)"
                             stroke="#E53935"
                             strokeWidth="1"
                           />
                           <text
                             x="24"
-                            y="-13"
+                            y="-12"
                             fill="#FFFFFF"
                             fontSize="10"
                             fontFamily="Manrope, sans-serif"
@@ -584,13 +667,13 @@ export function ProcessTimeline() {
                           </text>
                           <text
                             x="24"
-                            y="-3"
+                            y="0"
                             fill="#E8C547"
                             fontSize="8.5"
                             fontFamily="Manrope, sans-serif"
                             fontWeight="600"
                           >
-                            ✓ Customs Cleared & Final Delivery Handover
+                            ✓ Customs Cleared & Final Handover
                           </text>
                         </g>
                       </g>
@@ -632,7 +715,7 @@ export function ProcessTimeline() {
                     </span>
                   </div>
 
-                  {/* Animated Central Node Representation */}
+                  {/* Central Node Representation */}
                   <div className="mt-6 flex flex-col items-center justify-center text-center py-6">
                     <div className="relative">
                       <div className="grid h-20 w-20 place-items-center rounded-3xl border-2 border-gold bg-deep text-gold shadow-[0_0_30px_rgba(212,175,55,0.3)]">
