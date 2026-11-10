@@ -6,6 +6,9 @@
     "nodejs_compat"
   ],
   "pages_build_output_dir": "dist",
+  "build": {
+    "command": "npm run build"
+  },
   "observability": {
     "enabled": true
   }
