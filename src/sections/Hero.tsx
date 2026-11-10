@@ -108,9 +108,9 @@ export function Hero() {
               <strong className="text-ivory font-semibold">
                 CHINNAGUWALA SHIVAHARI EXPORTS PRIVATE LIMITED
               </strong>{" "}
-              (CS Shivahari Exports) connects international buyers directly with our farms across
-              Andhra Pradesh and India — exporting 190 products across 22 categories under FSSAI
-              Central License 10126999000631 with rigorous source inspection and global shipping.
+              connects international buyers directly with our farms across Andhra Pradesh and
+              India — exporting 190 products across 22 categories under FSSAI Central License
+              10126999000631 with rigorous source inspection and global shipping.
             </motion.p>
 
             {/* Key Value Points */}
