@@ -10,6 +10,11 @@ export default defineConfig({
   plugins: [],
   nitro: {
     preset: "cloudflare-pages",
+    cloudflare: {
+      wrangler: {
+        name: "exports-mango-3",
+      },
+    },
   },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
